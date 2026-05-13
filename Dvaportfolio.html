@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка фото | Конструктор стиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            min-height: 100vh;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+        }
+
+        .header {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--sand-dark);
+            background-color: rgba(253, 249, 245, 0.95);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--black-soft);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .steps-sidebar {
+            flex: 0.8;
+            min-width: 180px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: sticky;
+            top: 40px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--sand-light);
+            border: 1px solid var(--sand-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8f7a68;
+            transition: all 0.2s;
+        }
+
+        .step.active .step-number {
+            background-color: var(--black-soft);
+            border-color: var(--black-soft);
+            color: white;
+        }
+
+        .step-label {
+            font-weight: 500;
+            color: #5a4a3a;
+        }
+
+        .step.active .step-label {
+            color: var(--black-soft);
+            font-weight: 600;
+        }
+
+        .form-container {
+            flex: 3;
+            min-width: 300px;
+            background: var(--white);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .step-description {
+            color: #7a6a5a;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+        }
+
+        .upload-section {
+            margin-bottom: 40px;
+        }
+
+        .upload-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--black-soft);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--sand-dark);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--sand-light);
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background-color: #f5ede4;
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .preview-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--sand-dark);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            gap: 16px;
+        }
+
+        .btn-back {
+            background-color: transparent;
+            border: 1px solid var(--sand-dark);
+            padding: 14px 36px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            color: var(--black-soft);
+        }
+
+        .btn-next {
+            background-color: var(--black-soft);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-next:hover, .btn-back:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-next:hover {
+            background-color: #1a1a1a;
+        }
+
+        .btn-back:hover {
+            background-color: var(--sand-light);
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+                padding: 24px;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Конструктор<span>Стиля</span></a>
+</header>
+
+<div class="container">
+    <div class="steps-sidebar">
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-label">О себе и коллекции</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">2</div>
+                <div class="step-label">Загрузка фото</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Интерактивность</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Загрузите визуалы</h2>
+        <div class="step-description">Добавьте фото коллекции и ткани — они покажут вашу работу в лучшем свете</div>
+
+        <!-- Секция: фото коллекции -->
+        <div class="upload-section">
+            <div class="upload-title"> Фото коллекции</div>
+            <div class="upload-area" id="collectionUploadArea">
+                <div class="upload-icon"></div>
+                <div>Нажмите или перетащите фото</div>
+                <small style="color: #8f7a68;">JPG, PNG до 5MB</small>
+                <input type="file" id="collectionInput" accept="image/*" multiple>
+            </div>
+            <div id="collectionPreview" class="preview-grid"></div>
+        </div>
+
+        <!-- Секция: фото тканей (с автоматическим обрезанием) -->
+        <div class="upload-section">
+            <div class="upload-title"> Фото тканей и текстур</div>
+            <div class="upload-area" id="fabricUploadArea">
+                <div class="upload-icon"></div>
+                <div>Нажмите или перетащите фото ткани</div>
+                <small style="color: #8f7a68;">Автоматически обрежется до квадрата 400x400px</small>
+                <input type="file" id="fabricInput" accept="image/*" multiple>
+            </div>
+            <div id="fabricPreview" class="preview-grid"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-back" id="backBtn">← Назад</button>
+            <button class="btn-next" id="nextBtn">Продолжить →</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Хранилище фото
+    let collectionPhotos = [];
+    let fabricPhotos = [];
+
+    // Функция обрезания фото в квадрат
+    function cropToSquare(imageFile, callback) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                const size = 400;
+                canvas.width = size;
+                canvas.height = size;
+                
+                let sx = 0, sy = 0;
+                let sWidth = img.width, sHeight = img.height;
+                
+                if (img.width > img.height) {
+                    sWidth = img.height;
+                    sx = (img.width - img.height) / 2;
+                } else {
+                    sHeight = img.width;
+                    sy = (img.height - img.width) / 2;
+                }
+                
+                ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, size, size);
+                
+                callback(canvas.toDataURL('image/jpeg', 0.9));
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(imageFile);
+    }
+
+    // Функция отображения превью для коллекции
+    function updateCollectionPreview() {
+        const container = document.getElementById('collectionPreview');
+        container.innerHTML = collectionPhotos.map((photo, index) => `
+            <div class="preview-item">
+                <img src="${photo}" alt="Фото коллекции">
+                <div class="delete-btn" data-index="${index}" data-type="collection">✕</div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('[data-type="collection"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.index);
+                collectionPhotos.splice(index, 1);
+                updateCollectionPreview();
+            });
+        });
+    }
+
+    // Функция отображения превью для тканей
+    function updateFabricPreview() {
+        const container = document.getElementById('fabricPreview');
+        container.innerHTML = fabricPhotos.map((photo, index) => `
+            <div class="preview-item">
+                <img src="${photo}" alt="Фото ткани">
+                <div class="delete-btn" data-index="${index}" data-type="fabric">✕</div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('[data-type="fabric"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.index);
+                fabricPhotos.splice(index, 1);
+                updateFabricPreview();
+            });
+        });
+    }
+
+    // Обработка загрузки фото коллекции
+    const collectionInput = document.getElementById('collectionInput');
+    const collectionArea = document.getElementById('collectionUploadArea');
+    
+    collectionArea.addEventListener('click', () => collectionInput.click());
+    collectionInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                collectionPhotos.push(event.target.result);
+                updateCollectionPreview();
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    // Обработка загрузки фото тканей (с автообрезанием)
+    const fabricInput = document.getElementById('fabricInput');
+    const fabricArea = document.getElementById('fabricUploadArea');
+    
+    fabricArea.addEventListener('click', () => fabricInput.click());
+    fabricInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            cropToSquare(file, (croppedImage) => {
+                fabricPhotos.push(croppedImage);
+                updateFabricPreview();
+            });
+        });
+    });
+
+    // Навигация
+    document.getElementById('backBtn').addEventListener('click', () => {
+        localStorage.setItem('collectionPhotos', JSON.stringify(collectionPhotos));
+        localStorage.setItem('fabricPhotos', JSON.stringify(fabricPhotos));
+        window.location.href = 'portfoluo.html';
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if (collectionPhotos.length === 0) {
+            alert('Добавьте хотя бы одно фото коллекции');
+            return;
+        }
+        localStorage.setItem('collectionPhotos', JSON.stringify(collectionPhotos));
+        localStorage.setItem('fabricPhotos', JSON.stringify(fabricPhotos));
+        window.location.href = 'triportfolio.html';
+    });
+
+    // Загружаем ранее сохранённые фото
+    const savedCollection = localStorage.getItem('collectionPhotos');
+    const savedFabric = localStorage.getItem('fabricPhotos');
+    if (savedCollection) collectionPhotos = JSON.parse(savedCollection);
+    if (savedFabric) fabricPhotos = JSON.parse(savedFabric);
+    updateCollectionPreview();
+    updateFabricPreview();
+</script>
+</body>
+</html>

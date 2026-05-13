@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Конструктор стиля | Портфолио дизайнеров одежды</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            line-height: 1.4;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+            --gray-light: #EBE4DB;
+            --delete-red: #c27a6e;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--gray-light);
+            background-color: rgba(253, 249, 245, 0.95);
+            backdrop-filter: blur(4px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--black-soft);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            margin-left: auto;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--sand-dark);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--black-soft);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--sand);
+            border-color: var(--accent);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 64px 0 32px 0;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: var(--black-soft);
+            letter-spacing: -0.01em;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #5a5a5a;
+            margin-top: 16px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 24px 0 60px 0;
+        }
+        
+        .btn-create {
+            background-color: var(--black-soft);
+            color: white;
+            border: none;
+            padding: 14px 42px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 60px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-create:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 40px 0 24px 0;
+            color: var(--black-soft);
+            border-left: 3px solid var(--accent);
+            padding-left: 16px;
+        }
+
+        .filters-section {
+            margin: 20px 0 40px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: transparent;
+            border: 1px solid var(--sand-dark);
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #3a3a3a;
+        }
+
+        .filter-chip.active {
+            background-color: var(--black-soft);
+            border-color: var(--black-soft);
+            color: white;
+        }
+
+        .filter-chip:hover {
+            background-color: var(--sand);
+        }
+
+        .result-count {
+            font-size: 0.85rem;
+            color: #7a6a5a;
+            letter-spacing: 0.2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            display: block;
+            background-color: var(--sand-light);
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.02);
+        }
+
+        .card-info {
+            padding: 20px 18px 22px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: -0.2px;
+            margin-bottom: 6px;
+            color: #1E1E1E;
+        }
+
+        .card-designer {
+            font-size: 0.85rem;
+            color: #8f7a68;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            background: var(--sand-light);
+            padding: 4px 10px;
+            border-radius: 30px;
+            color: #5c4b3a;
+            font-weight: 500;
+        }
+
+        .delete-portfolio-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(194, 122, 110, 0.9);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+            opacity: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .card:hover .delete-portfolio-btn {
+            opacity: 1;
+        }
+
+        .delete-portfolio-btn:hover {
+            background: rgba(194, 122, 110, 1);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            border-top: 1px solid var(--gray-light);
+            padding: 32px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #a3927e;
+            margin-top: 40px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a3927e;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                padding: 0 20px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .filters-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .btn-create {
+                padding: 12px 32px;
+                font-size: 1rem;
+            }
+            .header-inner {
+                justify-content: space-between;
+            }
+            .nav-buttons {
+                margin-left: 0;
+            }
+            .delete-portfolio-btn {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="#" class="logo">Конструктор <span>Стиля</span></a>
+        <div class="nav-buttons">
+            <button class="btn-outline" id="loginBtn">Войти</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="hero">
+            <h1>Портфолио дизайнеров одежды</h1>
+            <p>Создавайте портфолио, добавляйте фото коллекций и тканей, публикуйте и вдохновляйте других дизайнеров.</p>
+        </div>
+
+        <div class="cta-section">
+            <a href="vtoraiaStranitsa.html" class="btn-create">Создать своё портфолио</a>
+        </div>
+
+        <h2 class="section-title">Примеры портфолио</h2>
+
+        <div class="grid" id="examplesGrid">
+            <div class="card" data-season="spring" data-link="lepestok.html">
+                <img class="card-image" src="images/lepistoc.jpg" alt="Платье весна 2025" loading="lazy">
+                <div class="card-info">
+                    <div class="card-title">Лепесток</div>
+                    <div class="card-designer">Анна Ветрова</div>
+                    <div class="card-tags">
+                        <span class="tag">Весна-Лето 2025</span>
+                        <span class="tag">шёлк</span>
+                        <span class="tag">органза</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" data-season="autumn" data-link="gorodscou.html">
+                <img class="card-image" src="images/gorod.jpg" alt="Пальто коллекция осень" loading="lazy">
+                <div class="card-info">
+                    <div class="card-title">Городской силуэт</div>
+                    <div class="card-designer">Михаил Кравцов</div>
+                    <div class="card-tags">
+                        <span class="tag">Осень-Зима 2024</span>
+                        <span class="tag">твид</span>
+                        <span class="tag">кожа</span>
+                        <span class="tag">шерсть</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" data-season="spring" data-link="shelcovui.html">
+                <img class="card-image" src="images/son.jpg" alt="Шелковое платье" loading="lazy">
+                <div class="card-info">
+                    <div class="card-title">Шёлковый сон</div>
+                    <div class="card-designer">Елена Морозова</div>
+                    <div class="card-tags">
+                        <span class="tag">Весна-Лето 2025</span>
+                        <span class="tag">шёлк</span>
+                        <span class="tag">атлас</span>
+                        <span class="tag">шифон</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" data-season="autumn" data-link="grange.html">
+                <img class="card-image" src="images/grange.jpg" alt="Костюм хлопок" loading="lazy">
+                <div class="card-info">
+                    <div class="card-title">Осенний гранж</div>
+                    <div class="card-designer">Дарья Невская</div>
+                    <div class="card-tags">
+                        <span class="tag">Осень-Зима 2025</span>
+                        <span class="tag">клетка</span>
+                        <span class="tag">кожа</span>
+                        <span class="tag">вязаный трикотаж</span>
+                        <span class="tag">потёртые фактуры</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Опубликованные портфолио</h2>
+        
+        <div class="filters-section">
+            <div class="filter-group">
+                <span class="filter-chip active" data-filter="all">Все сезоны</span>
+                <span class="filter-chip" data-filter="spring">Весна-Лето</span>
+                <span class="filter-chip" data-filter="autumn">Осень-Зима</span>
+            </div>
+            <div class="result-count" id="userResultCount">0 портфолио</div>
+        </div>
+
+        <div class="grid" id="userPortfolioGrid">
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 Конструктор Стиля — интерактивное портфолио для дизайнеров одежды</p>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        function deletePortfolio(portfolioId, event) {
+            event.stopPropagation(); 
+            if (confirm('Вы уверены, что хотите удалить это портфолио? Отменить будет нельзя.')) {
+                let publishedPortfolios = JSON.parse(localStorage.getItem('publishedPortfolios') || '[]');
+                const newPortfolios = publishedPortfolios.filter(p => p.id !== portfolioId);
+                localStorage.setItem('publishedPortfolios', JSON.stringify(newPortfolios));
+                
+
+                loadUserPortfolios();
+                setupUserFilters();
+            }
+        }
+        
+        // Загрузка опубликованных портфолио
+        function loadUserPortfolios() {
+            const publishedPortfolios = JSON.parse(localStorage.getItem('publishedPortfolios') || '[]');
+            const grid = document.getElementById('userPortfolioGrid');
+            const resultSpan = document.getElementById('userResultCount');
+            
+            if (publishedPortfolios.length === 0) {
+                grid.innerHTML = '<div class="empty-message">Пока нет опубликованных портфолио. Будьте первым!</div>';
+                if (resultSpan) resultSpan.innerText = '0 портфолио';
+                return;
+            }
+            
+            let html = '';
+            publishedPortfolios.forEach(portfolio => {
+                let seasonClass = '';
+                if (portfolio.season && (portfolio.season.includes('Весна') || portfolio.season.includes('Лето'))) {
+                    seasonClass = 'spring';
+                } else if (portfolio.season && (portfolio.season.includes('Осень') || portfolio.season.includes('Зима'))) {
+                    seasonClass = 'autumn';
+                }
+                
+                let tagsHtml = '';
+                if (portfolio.tags && portfolio.tags.length > 0) {
+                    portfolio.tags.forEach(tag => {
+                        tagsHtml += `<span class="tag">${escapeHtml(tag)}</span>`;
+                    });
+                }
+                tagsHtml += `<span class="tag">${escapeHtml(portfolio.season || 'Сезон не указан')}</span>`;
+                
+                html += `
+                    <div class="card user-portfolio" data-season="${seasonClass}" data-id="${portfolio.id}">
+                        <button class="delete-portfolio-btn" data-id="${portfolio.id}">✕ Удалить</button>
+                        <img class="card-image" src="${portfolio.mainPhoto}" alt="${escapeHtml(portfolio.collectionName)}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x500?text=No+Image'">
+                        <div class="card-info">
+                            <div class="card-title">${escapeHtml(portfolio.collectionName)}</div>
+                            <div class="card-designer">${escapeHtml(portfolio.designerName)}</div>
+                            <div class="card-tags">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            if (resultSpan) resultSpan.innerText = publishedPortfolios.length + (publishedPortfolios.length === 1 ? ' портфолио' : ' портфолио');
+            
+            document.querySelectorAll('.user-portfolio').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('delete-portfolio-btn')) {
+                        const id = card.getAttribute('data-id');
+                        if (id) {
+                            window.location.href = `user-portfolio-view.html?id=${id}`;
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete-portfolio-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    deletePortfolio(id, e);
+                });
+            });
+        }
+        
+        // Фильтрация для пользовательских портфолио
+        function setupUserFilters() {
+            const filterChips = document.querySelectorAll('.filter-group .filter-chip');
+            
+            function updateUserFilter() {
+                const activeChip = document.querySelector('.filter-group .filter-chip.active');
+                if (!activeChip) return;
+                const filterValue = activeChip.getAttribute('data-filter');
+                const cards = document.querySelectorAll('.user-portfolio');
+                let visibleCount = 0;
+                
+                cards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        const season = card.getAttribute('data-season');
+                        if (season === filterValue) {
+                            card.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+                
+                const resultSpan = document.getElementById('userResultCount');
+                if (resultSpan) {
+                    const totalPublished = JSON.parse(localStorage.getItem('publishedPortfolios') || '[]').length;
+                    resultSpan.innerText = visibleCount + (visibleCount === 1 ? ' портфолио' : ' портфолио');
+                }
+            }
+            
+            filterChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    filterChips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    updateUserFilter();
+                });
+            });
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Примеры портфолио - клики
+        const exampleCards = document.querySelectorAll('#examplesGrid .card');
+        exampleCards.forEach((card) => {
+            card.addEventListener('click', (e) => {
+                const link = card.getAttribute('data-link');
+                if (link) {
+                    window.location.href = link;
+                }
+            });
+        });
+        
+        // Кнопка "Войти"
+        document.getElementById('loginBtn')?.addEventListener('click', () => {
+            window.location.href = 'vouti.html';
+        });
+        
+        // Загружаем пользовательские портфолио и настраиваем фильтры
+        loadUserPortfolios();
+        setupUserFilters();
+    })();
+</script>
+</body>
+</html>

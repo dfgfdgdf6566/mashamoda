@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шёлковый сон | Конструктор стиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            min-height: 100vh;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+        }
+
+        .header {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--sand-dark);
+            background-color: rgba(253, 249, 245, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--black-soft);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: 1px solid var(--sand-dark);
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--black-soft);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-btn:hover {
+            background-color: var(--sand);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .portfolio-slide {
+            background-color: white;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slide-content {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+            min-height: 600px;
+        }
+
+        .left-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .center-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .main-photo {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .main-photo img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 24px;
+        }
+
+        .right-column {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .fabric-item {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .fabric-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .text-block {
+            margin-bottom: 16px;
+        }
+        .text-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .text-block p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: inherit;
+        }
+
+        @media (max-width: 900px) {
+            .slide-content {
+                flex-direction: column;
+                padding: 24px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .right-column {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .fabric-item {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Конструктор <span>Стиля</span></a>
+    <a href="index.html" class="back-btn">← На главную</a>
+</header>
+
+<div class="container">
+    <div class="portfolio-slide">
+        <div class="slide-content">
+            <!-- Левая колонка - текст -->
+            <div class="left-column">
+                <div class="text-block">
+                    <h3>О ДИЗАЙНЕРЕ</h3>
+                    <p>Дизайнер из Екатеринбурга. Создаю одежду, которая подчеркивает индивидуальность и дарит уверенность. Вдохновляюсь музыкой, танцем и женской грацией.</p>
+                </div>
+                <div class="text-block">
+                    <h3>НАПРАВЛЕНИЯ</h3>
+                    <p>Женская одежда, вечерние и коктейльные платья, свадебные наряды</p>
+                </div>
+                <div class="text-block">
+                    <h3>НАЗВАНИЕ КОЛЛЕКЦИИ</h3>
+                    <p>Шёлковый сон</p>
+                </div>
+                <div class="text-block">
+                    <h3>СЕЗОН</h3>
+                    <p>Весна-Лето 2025</p>
+                </div>
+                <div class="text-block">
+                    <h3>О КОЛЛЕКЦИИ</h3>
+                    <p>Коллекция «Шёлковый сон» — это магия шелка и воздуха. Легкие, струящиеся платья, нежные оттенки, идеальный крой. Для тех, кто ценит элегантность и комфорт. Каждое платье создает ощущение невесомости и полета.</p>
+                </div>
+            </div>
+
+            <!-- Центральная колонка - основные фото -->
+            <div class="center-column">
+                <div class="main-photo">
+                    <img src="images/son.jpg" alt="Главное фото коллекции">
+                </div>
+            </div>
+
+            <!-- Правая колонка - фото тканей -->
+            <div class="right-column">
+                <div class="fabric-item">
+                    <img src="images/sholk.jpg" alt="Шёлк">
+                </div>
+                <div class="fabric-item">
+                    <img src="images/koricneviu.jpg" alt="Шёлк атлас">
+                </div>
+                <div class="fabric-item">
+                    <img src="images/palma.jpg" alt="Шифон">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание портфолио | Конструктор Стиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            min-height: 100vh;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+        }
+
+        /* Шапка */
+        .header {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--sand-dark);
+            background-color: rgba(253, 249, 245, 0.95);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--black-soft);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* Основной контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        /* Левая часть — этапы */
+        .steps-sidebar {
+            flex: 0.8;
+            min-width: 180px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: sticky;
+            top: 40px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--sand-light);
+            border: 1px solid var(--sand-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8f7a68;
+            transition: all 0.2s;
+        }
+
+        .step.active .step-number {
+            background-color: var(--black-soft);
+            border-color: var(--black-soft);
+            color: white;
+        }
+
+        .step-label {
+            font-weight: 500;
+            color: #5a4a3a;
+        }
+
+        .step.active .step-label {
+            color: var(--black-soft);
+            font-weight: 600;
+        }
+
+        /* Правая часть — форма */
+        .form-container {
+            flex: 3;
+            min-width: 300px;
+            background: var(--white);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .step-description {
+            color: #7a6a5a;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #3a2e26;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--sand-dark);
+            border-radius: 20px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            transition: 0.2s;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(199, 169, 125, 0.2);
+        }
+
+        .btn-next {
+            background-color: var(--black-soft);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            float: right;
+        }
+
+        .btn-next:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+                padding: 24px;
+            }
+            .steps-sidebar {
+                margin-bottom: 20px;
+            }
+            .steps {
+                flex-direction: row;
+                flex-wrap: wrap;
+                position: static;
+            }
+            .form-container {
+                padding: 28px;
+            }
+            .btn-next {
+                width: 100%;
+                float: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Конструктор<span>Стиля</span></a>
+</header>
+
+<div class="container">
+    <!-- Левая часть: этапы 1 2 3 -->
+    <div class="steps-sidebar">
+        <div class="steps">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div class="step-label">О себе и коллекции</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-label">Загрузка фото</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Интерактивность</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая часть: форма (этап 1) -->
+    <div class="form-container">
+        <h2>Расскажите о себе</h2>
+        <div class="step-description">Заполните информацию о дизайнере и вашей коллекции</div>
+
+        <form id="portfolioStep1">
+            <!-- О дизайнере -->
+            <div class="form-group">
+                <label>О себе</label>
+                <textarea id="aboutDesigner" placeholder="Например: Молодой дизайнер из Москвы, специализируюсь на эко-материалах. Вдохновляюсь архитектурой и природой..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Чем занимаетесь (ключевые направления)</label>
+                <input type="text" id="specialization" placeholder="женская одежда премиум, кэжуал, сценические костюмы">
+            </div>
+
+            <!-- О коллекции -->
+            <div class="form-group">
+                <label>Название коллекции</label>
+                <input type="text" id="collectionName" placeholder="например: «Весеннее пробуждение»">
+            </div>
+
+            <div class="form-group">
+                <label>Сезон коллекции</label>
+                <select id="season">
+                    <option value="">Выберите сезон</option>
+                    <option value="spring_summer">Весна-Лето 2025</option>
+                    <option value="autumn_winter">Осень-Зима 2025</option>
+                    <option value="spring_summer_2026">Весна-Лето 2026</option>
+                    <option value="autumn_winter_2026">Осень-Зима 2026</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Расскажите о коллекции</label>
+                <textarea id="collectionDesc" placeholder="Какая идея заложена? Какие ткани использованы? Что вдохновляло?"></textarea>
+            </div>
+
+            <div class="clearfix">
+                <button type="submit" class="btn-next">Продолжить →</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('portfolioStep1');
+    
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Собираем данные
+        const formData = {
+            aboutDesigner: document.getElementById('aboutDesigner').value,
+            specialization: document.getElementById('specialization').value,
+            collectionName: document.getElementById('collectionName').value,
+            season: document.getElementById('season').value,
+            collectionDesc: document.getElementById('collectionDesc').value
+        };
+        
+        // Простая проверка: название коллекции обязательно
+        if (!formData.collectionName.trim()) {
+            alert('Пожалуйста, укажите название коллекции');
+            return;
+        }
+        
+        // Сохраняем в localStorage для следующих этапов
+        localStorage.setItem('portfolioStep1', JSON.stringify(formData));
+        
+        // Переход на Dvaportfolio.html
+        window.location.href = 'Dvaportfolio.html';
+    });
+</script>
+</body>
+</html>

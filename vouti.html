@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | Конструктор стиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+            --error: #c27a6e;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            background: var(--white);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            padding: 40px 36px;
+            transition: all 0.2s;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 28px;
+            letter-spacing: -0.02em;
+            color: var(--black-soft);
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+        .sub {
+            text-align: center;
+            color: #7a6a5a;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #3a2e26;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--sand-dark);
+            border-radius: 20px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            transition: 0.2s;
+            outline: none;
+        }
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(199, 169, 125, 0.2);
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: var(--black-soft);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-login:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-1px);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.9rem;
+            color: #5a4a3a;
+        }
+        .register-link a {
+            color: var(--black-soft);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid var(--sand-dark);
+        }
+        .register-link a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .success-message {
+            background: #e0e7dd;
+            color: #2c5a2e;
+            padding: 12px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: 0;
+            height: 1px;
+            background: var(--sand-light);
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <a href="index.html" class="logo">Конструктор<span>Стиля</span></a>
+        <h2>Добро пожаловать</h2>
+        <div class="sub">Войдите в свой аккаунт</div>
+
+        <div id="errorMessage" class="error-message" style="display: none; text-align: center; margin-bottom: 20px;"> Неверный email или пароль</div>
+        <div id="successMessage" class="success-message"> Вход выполнен! Перенаправление...</div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="designer@example.com" required>
+                <div class="error-message" id="emailError">Введите корректный email</div>
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="password" placeholder="Введите пароль" required>
+                <div class="error-message" id="passwordError">Введите пароль</div>
+            </div>
+
+            <button type="submit" class="btn-login">Войти</button>
+        </form>
+
+        <div class="register-link">
+            Нет аккаунта? <a href="vtoraiaStranitsa.html">Зарегистрироваться</a>
+        </div>
+        <hr>
+        <div style="font-size: 0.7rem; text-align: center; color: #b8a692;">
+            Войдите, чтобы управлять портфолио
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const successMessageDiv = document.getElementById('successMessage');
+
+        function validateEmail(email) {
+            return /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(email);
+        }
+
+        // Получаем список пользователей
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users') || '[]');
+        }
+
+        // Проверка логина
+        function checkLogin(email, password) {
+            const users = getUsers();
+            return users.find(user => user.email === email && user.password === password);
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Сброс ошибок
+            emailError.style.display = 'none';
+            passwordError.style.display = 'none';
+            errorMessageDiv.style.display = 'none';
+            successMessageDiv.style.display = 'none';
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Email
+            if (!validateEmail(email)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+            // Пароль
+            if (!password) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Проверяем пользователя в базе
+                const user = checkLogin(email, password);
+                
+                if (user) {
+                    // Сохраняем текущего пользователя в сессию
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        fullname: user.fullname,
+                        email: user.email
+                    }));
+                    
+                    successMessageDiv.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'portfoluo.html';
+                    }, 1500);
+                } else {
+                    errorMessageDiv.style.display = 'block';
+                }
+            } else {
+                errorMessageDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

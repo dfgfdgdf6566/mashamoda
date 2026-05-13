@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивность | Конструктор стиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDF9F5;
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+            min-height: 100vh;
+        }
+
+        :root {
+            --sand: #F2E6D8;
+            --sand-light: #F9F3EC;
+            --sand-dark: #D9C7B0;
+            --black-soft: #2C2C2C;
+            --white: #FFFFFF;
+            --accent: #C7A97D;
+        }
+
+        .header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--sand-dark);
+            background-color: rgba(253, 249, 245, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--black-soft);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        .export-btn {
+            background-color: var(--black-soft);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .export-btn:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .settings-sidebar {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--sand-light);
+            border: 1px solid var(--sand-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8f7a68;
+        }
+
+        .step.active .step-number {
+            background-color: var(--black-soft);
+            border-color: var(--black-soft);
+            color: white;
+        }
+
+        .step.active .step-label {
+            color: var(--black-soft);
+            font-weight: 600;
+        }
+
+        .step-label {
+            font-weight: 500;
+            color: #5a4a3a;
+        }
+
+        .settings-panel {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .settings-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .layout-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .layout-btn {
+            flex: 1;
+            background-color: var(--sand-light);
+            border: 1px solid var(--sand-dark);
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .layout-btn.active {
+            background-color: var(--black-soft);
+            border-color: var(--black-soft);
+            color: white;
+        }
+        .layout-btn:hover:not(.active) {
+            background-color: var(--sand);
+        }
+
+        .color-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .color-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .color-circle.active {
+            border-color: var(--black-soft);
+            transform: scale(1.1);
+        }
+        .color-white { background-color: #FFFFFF; border: 1px solid #ddd; }
+        .color-yellow { background-color: #FFF3E0; }
+        .color-blue { background-color: #E3F2FD; }
+        .color-purple { background-color: #F3E5F5; }
+
+        .text-color-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--sand-dark);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .add-text-btn {
+            background-color: var(--sand-light);
+            border: 1px solid var(--sand-dark);
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .reset-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid var(--sand-dark);
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #c27a6e;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .publish-btn {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .publish-btn:hover {
+            background-color: #b8986a;
+            transform: translateY(-1px);
+        }
+
+        .editor-container {
+            flex: 3;
+            min-width: 600px;
+            overflow-x: auto;
+        }
+
+        .slide {
+            background-color: white;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            width: 1100px;
+            min-height: 700px;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .slide-content {
+            padding: 40px;
+            min-height: 700px;
+        }
+
+        /* СХЕМА 1: текст слева, фото и ткани справа */
+        .layout-left-text {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+        }
+        .layout-left-text .left-column {
+            flex: 1;
+        }
+        .layout-left-text .right-side {
+            flex: 2;
+            display: flex;
+            gap: 20px;
+        }
+        .layout-left-text .center-column {
+            flex: 2;
+        }
+        .layout-left-text .right-column {
+            flex: 1;
+        }
+
+        /* СХЕМА 2: текст + ткани слева, крупное фото справа - с выравниванием */
+        .layout-single-column {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            align-items: stretch;
+        }
+        .layout-single-column .left-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            justify-content: space-between;
+        }
+        .layout-single-column .left-column {
+            width: 100%;
+        }
+        .layout-single-column .right-column {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            flex-wrap: wrap;
+            width: 100%;
+            align-items: flex-end;
+        }
+        .layout-single-column .right-column .fabric-item {
+            width: 100px;
+            flex-shrink: 0;
+        }
+        .layout-single-column .right-column .fabric-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        .layout-single-column .center-column {
+            flex: 1;
+            display: flex;
+        }
+        .layout-single-column .center-column .main-photo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        .layout-single-column .center-column .main-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+        }
+
+        /* СХЕМА 3: текст справа, фото и ткани слева */
+        .layout-right-text {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            flex-direction: row-reverse;
+        }
+        .layout-right-text .left-column {
+            flex: 1;
+        }
+        .layout-right-text .right-side {
+            flex: 2;
+            display: flex;
+            gap: 20px;
+        }
+        .layout-right-text .center-column {
+            flex: 2;
+        }
+        .layout-right-text .right-column {
+            flex: 1;
+        }
+
+        /* Общие стили */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .center-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .main-photo {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .main-photo img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 24px;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .fabric-item {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .fabric-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .text-block {
+            margin-bottom: 16px;
+        }
+        .text-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .text-block p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: inherit;
+        }
+
+        .editor-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .control-btn {
+            background: rgba(44, 44, 44, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .control-btn:hover {
+            background: rgba(44, 44, 44, 1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 500px;
+            width: 90%;
+            padding: 32px;
+            position: relative;
+        }
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--sand-dark);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+        .modal-confirm {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+        .modal-cancel {
+            background: transparent;
+            border: 1px solid var(--sand-dark);
+        }
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .slide {
+                transform: scale(0.9);
+                transform-origin: top left;
+            }
+            .layout-left-text,
+            .layout-right-text {
+                flex-direction: column;
+            }
+            .layout-left-text .right-side,
+            .layout-right-text .right-side {
+                flex-direction: column;
+            }
+            .layout-single-column {
+                flex-direction: column;
+            }
+            .layout-single-column .right-column {
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Конструктор<span>Стиля</span></a>
+    <button class="export-btn" id="exportBtn"> Скачать портфолио</button>
+</header>
+
+<div class="container">
+    <div class="settings-sidebar">
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-label">О себе и коллекции</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-label">Загрузка фото</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">3</div>
+                <div class="step-label">Интерактивность</div>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <div class="settings-title"> Оформление</div>
+            
+            <div class="layout-buttons">
+                <div class="layout-btn active" data-layout="left-text">Схема 1</div>
+                <div class="layout-btn" data-layout="single-column">Схема 2</div>
+                <div class="layout-btn" data-layout="right-text">Схема 3</div>
+            </div>
+            
+            <div class="color-options">
+                <div class="color-circle color-white" data-color="#FFFFFF"></div>
+                <div class="color-circle color-yellow" data-color="#FFF3E0"></div>
+                <div class="color-circle color-blue" data-color="#E3F2FD"></div>
+                <div class="color-circle color-purple" data-color="#F3E5F5"></div>
+            </div>
+            <input type="color" id="textColorPicker" class="text-color-input" value="#2C2C2C">
+            <button class="add-text-btn" id="addTextBtn">+ Добавить заметку</button>
+            <button class="reset-btn" id="resetLayoutBtn">⟳ Сбросить заметки</button>
+            <button class="publish-btn" id="publishBtn"> Опубликовать портфолио</button>
+        </div>
+    </div>
+
+    <div class="editor-container">
+        <div class="slide" id="slide">
+            <div class="editor-controls" id="editorControls">
+                <button class="control-btn" id="toggleEditMode"> Режим редактирования</button>
+            </div>
+            <div class="slide-content" id="slideContent">
+                <!-- Динамическое содержимое -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tagsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModalBtn">&times;</span>
+        <h3>Какие ткани использовались?</h3>
+        <p style="margin-bottom: 16px; color: #7a6a5a;">Введите ткани через запятую (например: шёлк, хлопок, лён)</p>
+        <input type="text" id="tagsInput" placeholder="шёлк, хлопок, лён">
+        <div class="modal-buttons">
+            <button class="modal-cancel" id="cancelModalBtn">Отмена</button>
+            <button class="modal-confirm" id="confirmModalBtn">Опубликовать</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let portfolioData = {};
+    let collectionPhotos = [];
+    let fabricPhotos = [];
+    let extraTexts = [];
+    let editMode = false;
+    let currentLayout = 'left-text';
+
+    function loadData() {
+        const savedStep1 = localStorage.getItem('portfolioStep1');
+        if (savedStep1) portfolioData = JSON.parse(savedStep1);
+        
+        const savedCollection = localStorage.getItem('collectionPhotos');
+        if (savedCollection) collectionPhotos = JSON.parse(savedCollection);
+        
+        const savedFabric = localStorage.getItem('fabricPhotos');
+        if (savedFabric) fabricPhotos = JSON.parse(savedFabric);
+        
+        const savedExtra = localStorage.getItem('extraTexts');
+        if (savedExtra) extraTexts = JSON.parse(savedExtra);
+    }
+
+    function getSeasonText() {
+        switch(portfolioData.season) {
+            case 'spring_summer': return 'Весна-Лето 2025';
+            case 'autumn_winter': return 'Осень-Зима 2025';
+            case 'spring_summer_2026': return 'Весна-Лето 2026';
+            case 'autumn_winter_2026': return 'Осень-Зима 2026';
+            default: return portfolioData.season || 'Не указан';
+        }
+    }
+
+    function getTextBlocksHtml() {
+        let html = '';
+        
+        if (portfolioData.aboutDesigner && portfolioData.aboutDesigner.trim()) {
+            html += `
+                <div class="text-block" data-type="about">
+                    <h3> О СЕБЕ</h3>
+                    <p class="editable-text" data-field="about">${escapeHtml(portfolioData.aboutDesigner)}</p>
+                    ${editMode ? '<button class="edit-text-btn" data-field="about">✎ Редактировать</button>' : ''}
+                </div>
+            `;
+        }
+        
+        if (portfolioData.specialization && portfolioData.specialization.trim()) {
+            html += `
+                <div class="text-block" data-type="specialization">
+                    <h3> НАПРАВЛЕНИЯ</h3>
+                    <p class="editable-text" data-field="specialization">${escapeHtml(portfolioData.specialization)}</p>
+                    ${editMode ? '<button class="edit-text-btn" data-field="specialization">✎ Редактировать</button>' : ''}
+                </div>
+            `;
+        }
+        
+        if (portfolioData.collectionName && portfolioData.collectionName.trim()) {
+            html += `
+                <div class="text-block" data-type="collectionName">
+                    <h3> НАЗВАНИЕ КОЛЛЕКЦИИ</h3>
+                    <p class="editable-text" data-field="collectionName">${escapeHtml(portfolioData.collectionName)}</p>
+                    ${editMode ? '<button class="edit-text-btn" data-field="collectionName">✎ Редактировать</button>' : ''}
+                </div>
+            `;
+        }
+        
+        html += `
+            <div class="text-block">
+                <h3> СЕЗОН</h3>
+                <p>${getSeasonText()}</p>
+            </div>
+        `;
+        
+        if (portfolioData.collectionDesc && portfolioData.collectionDesc.trim()) {
+            html += `
+                <div class="text-block" data-type="collectionDesc">
+                    <h3> О КОЛЛЕКЦИИ</h3>
+                    <p class="editable-text" data-field="collectionDesc">${escapeHtml(portfolioData.collectionDesc)}</p>
+                    ${editMode ? '<button class="edit-text-btn" data-field="collectionDesc">✎ Редактировать</button>' : ''}
+                </div>
+            `;
+        }
+        
+        extraTexts.forEach((item, index) => {
+            html += `
+                <div class="text-block" data-extra-id="${index}">
+                    <h3 class="editable-title" data-extra-index="${index}">${escapeHtml(item.title)}</h3>
+                    <p class="editable-extra" data-extra-index="${index}">${escapeHtml(item.content)}</p>
+                    ${editMode ? `
+                        <button class="edit-extra-btn" data-extra-index="${index}">✎ Редактировать</button>
+                        <button class="delete-extra-btn" data-extra-index="${index}">🗑 Удалить</button>
+                    ` : ''}
+                </div>
+            `;
+        });
+        
+        return html;
+    }
+
+    function getCenterColumnHtml() {
+        let html = `<div class="center-column">`;
+        if (collectionPhotos.length > 0) {
+            html += `<div class="main-photo"><img src="${collectionPhotos[0]}" alt="Главное фото коллекции"></div>`;
+            if (collectionPhotos.length > 1) {
+                html += `<div class="main-photo"><img src="${collectionPhotos[1]}" alt="Второе фото коллекции"></div>`;
+            }
+        } else {
+            html += `<div class="text-block"><p> Нет загруженных фото</p></div>`;
+        }
+        html += `</div>`;
+        return html;
+    }
+
+    function getRightColumnHtml() {
+        let html = `<div class="right-column">`;
+        if (fabricPhotos.length > 0) {
+            fabricPhotos.forEach((photo, index) => {
+                html += `
+                    <div class="fabric-item">
+                        <img src="${photo}" alt="Ткань ${index + 1}">
+                    </div>
+                `;
+            });
+        } else {
+            html += `<div class="text-block"><p> Нет фото тканей</p></div>`;
+        }
+        html += `</div>`;
+        return html;
+    }
+
+    function renderSlide() {
+        const container = document.getElementById('slideContent');
+        const textBlocksHtml = getTextBlocksHtml();
+        const centerHtml = getCenterColumnHtml();
+        const rightHtml = getRightColumnHtml();
+        
+        let finalHtml = '';
+        
+        if (currentLayout === 'left-text') {
+            finalHtml = `
+                <div class="layout-left-text">
+                    <div class="left-column">
+                        ${textBlocksHtml}
+                    </div>
+                    <div class="right-side">
+                        ${centerHtml}
+                        ${rightHtml}
+                    </div>
+                </div>
+            `;
+        } else if (currentLayout === 'single-column') {
+            finalHtml = `
+                <div class="layout-single-column">
+                    <div class="left-side">
+                        <div class="left-column">
+                            ${textBlocksHtml}
+                        </div>
+                        ${rightHtml}
+                    </div>
+                    ${centerHtml}
+                </div>
+            `;
+        } else if (currentLayout === 'right-text') {
+            finalHtml = `
+                <div class="layout-right-text">
+                    <div class="left-column">
+                        ${textBlocksHtml}
+                    </div>
+                    <div class="right-side">
+                        ${centerHtml}
+                        ${rightHtml}
+                    </div>
+                </div>
+            `;
+        }
+        
+        container.innerHTML = finalHtml;
+        
+        if (editMode) {
+            attachEditEventListeners();
+        }
+    }
+    
+    function attachEditEventListeners() {
+        document.querySelectorAll('.edit-text-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const field = btn.dataset.field;
+                const currentText = portfolioData[field] || '';
+                const newText = prompt('Введите новый текст:', currentText);
+                if (newText !== null && newText.trim()) {
+                    portfolioData[field] = newText;
+                    localStorage.setItem('portfolioStep1', JSON.stringify(portfolioData));
+                    renderSlide();
+                }
+            });
+        });
+        
+        document.querySelectorAll('.edit-extra-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.extraIndex);
+                const currentTitle = extraTexts[index].title;
+                const currentContent = extraTexts[index].content;
+                
+                const newTitle = prompt('Введите заголовок заметки:', currentTitle);
+                if (newTitle !== null && newTitle.trim()) {
+                    const newContent = prompt('Введите текст заметки:', currentContent);
+                    if (newContent !== null) {
+                        extraTexts[index] = { title: newTitle, content: newContent };
+                        localStorage.setItem('extraTexts', JSON.stringify(extraTexts));
+                        renderSlide();
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('.delete-extra-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.extraIndex);
+                if (confirm('Удалить эту заметку?')) {
+                    extraTexts.splice(index, 1);
+                    localStorage.setItem('extraTexts', JSON.stringify(extraTexts));
+                    renderSlide();
+                }
+            });
+        });
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/\n/g, '<br>');
+    }
+    
+    function addExtraText() {
+        const title = prompt('Введите заголовок заметки:', 'Вдохновение');
+        if (title && title.trim()) {
+            const content = prompt('Введите текст заметки:', 'Ваш текст здесь...');
+            if (content !== null) {
+                extraTexts.push({ title: title.trim(), content: content });
+                localStorage.setItem('extraTexts', JSON.stringify(extraTexts));
+                renderSlide();
+            }
+        }
+    }
+    
+    function resetLayout() {
+        if (confirm('Удалить все добавленные заметки?')) {
+            extraTexts = [];
+            localStorage.removeItem('extraTexts');
+            renderSlide();
+        }
+    }
+    
+    function setBackgroundColor(color) {
+        document.querySelector('.slide').style.backgroundColor = color;
+    }
+    
+    function setTextColor(color) {
+        const slide = document.querySelector('.slide');
+        slide.style.color = color;
+        const allText = slide.querySelectorAll('.text-block p, .text-block h3, .editable-text');
+        allText.forEach(el => {
+            if (el.tagName === 'TEXTAREA') {
+                el.style.color = color;
+            } else {
+                el.style.color = color;
+            }
+        });
+    }
+    
+    async function exportPortfolio() {
+        const slide = document.getElementById('slide');
+        const originalControls = document.getElementById('editorControls');
+        const originalEditMode = editMode;
+        
+        originalControls.style.display = 'none';
+        
+        if (editMode) {
+            editMode = false;
+            renderSlide();
+            await new Promise(r => setTimeout(r, 100));
+        }
+        
+        try {
+            const canvas = await html2canvas(slide, {
+                scale: 2,
+                backgroundColor: getComputedStyle(slide).backgroundColor,
+                logging: false
+            });
+            
+            const link = document.createElement('a');
+            link.download = 'portfolio.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            alert(' Портфолио сохранено!');
+        } catch (error) {
+            console.error(error);
+            alert('Ошибка при сохранении');
+        }
+        
+        originalControls.style.display = 'flex';
+        if (originalEditMode) {
+            editMode = true;
+            renderSlide();
+        }
+    }
+    
+    function doPublishWithTags(tagsString) {
+        let designerName = localStorage.getItem('designerName');
+        if (!designerName && portfolioData.aboutDesigner) {
+            designerName = portfolioData.aboutDesigner.split('.')[0];
+        }
+        if (!designerName) {
+            designerName = 'Дизайнер';
+        }
+        
+        const seasonText = getSeasonText();
+        
+        let tags = [];
+        if (tagsString && tagsString.trim()) {
+            tags = tagsString.split(',').map(t => t.trim()).filter(t => t);
+        }
+        tags.push(seasonText);
+        
+        const publishedPortfolios = JSON.parse(localStorage.getItem('publishedPortfolios') || '[]');
+        
+        const newPortfolio = {
+            id: Date.now(),
+            designerName: designerName,
+            collectionName: portfolioData.collectionName || 'Без названия',
+            season: seasonText,
+            aboutDesigner: portfolioData.aboutDesigner || '',
+            specialization: portfolioData.specialization || '',
+            collectionDesc: portfolioData.collectionDesc || '',
+            mainPhotos: collectionPhotos,
+            mainPhoto: collectionPhotos[0] || '',
+            fabricPhotos: fabricPhotos,
+            extraTexts: extraTexts,
+            tags: tags,
+            layout: currentLayout,
+            createdAt: new Date().toISOString()
+        };
+        
+        publishedPortfolios.unshift(newPortfolio);
+        localStorage.setItem('publishedPortfolios', JSON.stringify(publishedPortfolios));
+        
+        alert(' Портфолио успешно опубликовано! Сейчас вы вернётесь на главную страницу.');
+        window.location.href = 'index.html';
+    }
+    
+    function openTagsModal() {
+        const modal = document.getElementById('tagsModal');
+        const input = document.getElementById('tagsInput');
+        input.value = '';
+        modal.style.display = 'flex';
+    }
+    
+    function closeTagsModal() {
+        const modal = document.getElementById('tagsModal');
+        modal.style.display = 'none';
+    }
+    
+    function init() {
+        loadData();
+        renderSlide();
+        
+        document.querySelectorAll('.color-circle').forEach(circle => {
+            circle.addEventListener('click', () => {
+                document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('active'));
+                circle.classList.add('active');
+                setBackgroundColor(circle.dataset.color);
+            });
+        });
+        
+        document.getElementById('textColorPicker').addEventListener('input', (e) => {
+            setTextColor(e.target.value);
+        });
+        
+        document.getElementById('addTextBtn').addEventListener('click', addExtraText);
+        document.getElementById('resetLayoutBtn').addEventListener('click', resetLayout);
+        document.getElementById('exportBtn').addEventListener('click', exportPortfolio);
+        
+        document.getElementById('publishBtn').addEventListener('click', () => {
+            if (!portfolioData.collectionName) {
+                alert('Сначала заполните информацию о коллекции на этапе 1');
+                return;
+            }
+            if (collectionPhotos.length === 0) {
+                alert('Сначала загрузите фото коллекции на этапе 2');
+                return;
+            }
+            openTagsModal();
+        });
+        
+        document.querySelectorAll('.layout-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLayout = btn.dataset.layout;
+                renderSlide();
+            });
+        });
+        
+        document.getElementById('confirmModalBtn').addEventListener('click', () => {
+            const tagsValue = document.getElementById('tagsInput').value;
+            doPublishWithTags(tagsValue);
+        });
+        
+        document.getElementById('cancelModalBtn').addEventListener('click', closeTagsModal);
+        document.getElementById('closeModalBtn').addEventListener('click', closeTagsModal);
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('tagsModal')) {
+                closeTagsModal();
+            }
+        });
+        
+        document.getElementById('toggleEditMode').addEventListener('click', () => {
+            editMode = !editMode;
+            renderSlide();
+        });
+        
+        setBackgroundColor('#FFFFFF');
+    }
+    
+    init();
+</script>
+</body>
+</html>
